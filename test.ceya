@@ -1,6 +1,0 @@
-print "hello world"; // commentaire
-fn time(str) {
-    return clock() + ": " + str;
-}
-
-print time("hello world");

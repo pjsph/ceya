@@ -42,6 +42,9 @@ pub enum TokenType {
     True, 
     Let, 
     While,
+    Soro,
+    Faran,
+    Ke,
 
     EOF
 }
@@ -244,13 +247,16 @@ impl Scanner {
             "for" => TokenType::For,
             "fn" => TokenType::Fn,
             "if" => TokenType::If,
-            "null" => TokenType::Null,
+            "fu" => TokenType::Null,
             "or" => TokenType::Or,
             "print" => TokenType::Print,
             "return" => TokenType::Return,
             "true" => TokenType::True,
             "let" => TokenType::Let,
             "while" => TokenType::While,
+            "soro" => TokenType::Soro,
+            "faran" => TokenType::Faran,
+            "ke" => TokenType::Ke,
             _ => TokenType::Identifier,
         };
         self.add_token(typ);
@@ -266,5 +272,72 @@ impl Scanner {
 
     fn is_alpha_numeric(c: char) -> bool {
         Self::is_digit(c) || Self::is_alpha(c)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::str::FromStr;
+
+    use super::{Scanner, TokenType};
+
+    #[test]
+    fn test_scan() {
+        let template = String::from_str("(){},.-+;*!=! == =<=<>=>/\"string\" 12 0.12 and else false for fn if fu or print return true let while soro faran ke // ignored").expect("Cannot parse &str.");
+        let scanner = Scanner {
+            source: template,
+            tokens: vec![],
+            current: 0,
+            line: 0,
+            start: 0
+        };
+        let tokens = scanner.scan_tokens();
+        let expected = vec![
+            TokenType::LeftParen, 
+            TokenType::RightParen, 
+            TokenType::LeftBrace, 
+            TokenType::RightBrace, 
+            TokenType::Comma, 
+            TokenType::Dot,
+            TokenType::Minus, 
+            TokenType::Plus, 
+            TokenType::Semicolon, 
+            TokenType::Star, 
+            TokenType::BangEqual, 
+            TokenType::Bang, 
+            TokenType::EqualEqual, 
+            TokenType::Equal, 
+            TokenType::LessEqual, 
+            TokenType::Less, 
+            TokenType::GreaterEqual,
+            TokenType::Greater,
+            TokenType::Slash,
+            TokenType::String("string".into()),
+            TokenType::Number(12.0),
+            TokenType::Number(0.12),
+            TokenType::And,
+            TokenType::Else,
+            TokenType::False,
+            TokenType::For,
+            TokenType::Fn,
+            TokenType::If,
+            TokenType::Null,
+            TokenType::Or,
+            TokenType::Print,
+            TokenType::Return,
+            TokenType::True,
+            TokenType::Let,
+            TokenType::While,
+            TokenType::Soro,
+            TokenType::Faran,
+            TokenType::Ke,
+            TokenType::EOF
+        ];
+        
+        for (i, token) in tokens.iter().enumerate() {
+            if token.typ != expected[i] {
+                panic!("{} is not equal to {}", token.typ, expected[i]);
+            }
+        }
     }
 }
