@@ -504,7 +504,10 @@ pub enum Stmt {
 
                 writeln!(&mut res, "   lea rcx, [msg]").unwrap();
                 writeln!(&mut res, "   pop rdx").unwrap();
+                writeln!(&mut res, "   xor al, al").unwrap();
+                writeln!(&mut res, "   sub rsp, 20h").unwrap();
                 writeln!(&mut res, "   call printf").unwrap();
+                writeln!(&mut res, "   add rsp, 20h").unwrap();
                 res
             },
             Stmt::Block { statements } => {

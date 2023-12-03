@@ -111,6 +111,9 @@ fn main() {
             writeln!(&mut file, "extern ExitProcess").unwrap();
             writeln!(&mut file, "extern printf\n").unwrap();
             writeln!(&mut file, "main:").unwrap();
+            writeln!(&mut file, "   push rbp").unwrap();
+            writeln!(&mut file, "   mov rbp, rsp").unwrap();
+            writeln!(&mut file, "   sub rsp, 32").unwrap();
 
             for stmt in stmts {
                 write!(&mut file, "{}", stmt.compile()).unwrap();

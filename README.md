@@ -4,14 +4,14 @@ Simple toy programming language.
 
 ## Examples
 
-Program that prints numbers from 10 to 1:
+Program that prints numbers from 100 to 1:
 
 ```
-10;
+100;
 ke;
 while (soro > 0) {
+    ke;
     print soro;
-    faran;
     soro - 1;
     ke;
 }
