@@ -16,3 +16,11 @@ while (soro > 0) {
     ke;
 }
 ```
+
+## Compilation
+
+```
+cargo run -- com [-r] <filename.ceya>
+```
+
+`-r` to instantly run your program after compilation.
